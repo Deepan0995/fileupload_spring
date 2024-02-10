@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class PricesService {
         List<Prices> dataList = parseExcelFile(file);
         pricesRepository.saveAll(dataList);
     }
+
 
     private List<Prices> parseExcelFile(MultipartFile file) throws IOException
     {
@@ -51,7 +53,15 @@ public class PricesService {
                     data.setFrontBackFlag((int) row.getCell(7).getNumericCellValue());
                     data.setQuantity((int) row.getCell(8).getNumericCellValue());
                     data.setPerPiece(row.getCell(9).getNumericCellValue());
-                    data.setPrice(row.getCell(10).getNumericCellValue());
+                    double priceValue = row.getCell(10).getNumericCellValue();
+                    System.out.println("first" + priceValue);
+
+                    // **Use Math.round to the nearest integer:**
+                    int roundedPrice = (int) Math.round(priceValue);
+                    BigDecimal price = BigDecimal.valueOf(roundedPrice);
+
+                    System.out.println("then" + price);
+                    data.setPrice(price);
                     data.setProductType((int) row.getCell(11).getNumericCellValue());
                     dataList.add(data);
                 } else {

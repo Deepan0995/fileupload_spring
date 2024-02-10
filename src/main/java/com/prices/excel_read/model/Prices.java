@@ -4,6 +4,8 @@ package com.prices.excel_read.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Data
 @Entity
 @Getter
@@ -52,7 +54,7 @@ public class Prices {
     private Double perPiece;
 
     @Column(name = "price")
-    private Double price;
+    private BigDecimal price;
 
     @Column(name = "product_type")
     private Integer productType;
